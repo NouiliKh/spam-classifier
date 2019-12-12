@@ -19,7 +19,6 @@ public:
     {
         ifstream infile(this->fileName );
         vector <vector <string> > data;
-
         while (infile)
         {
             string s;
@@ -43,7 +42,7 @@ public:
         {
             cerr << "Fooey!\n";
         }
-
+        data.erase(data.begin());
         return data;
     }
 };
