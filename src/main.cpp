@@ -34,6 +34,18 @@ int main() {
     bagOfWords.message_data = message_data;
     vector<map<string, int>>  bagOfWordsData = bagOfWords.createBagOfWords();
 
+    // test/train split
+
+    int sizeOfData = data.size();
+    double splitPercentage = 0.8;
+    vector<map<string, int>> X_train(bagOfWordsData.begin(), bagOfWordsData.begin () + (sizeOfData*splitPercentage));
+    vector<map<string, int>> X_test(bagOfWordsData.begin()+ (sizeOfData*splitPercentage), bagOfWordsData.end());
+    vector <string> y_train(label_data.begin(), label_data.begin () + (sizeOfData*splitPercentage));
+    vector <string> y_test(label_data.begin()+ (sizeOfData*splitPercentage), label_data.end());
+
+
+
+
 
     return 0;
 };
