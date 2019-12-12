@@ -75,10 +75,37 @@ public:
     vector <string> predictData(vector<vector<string>> X_test)
     {
         vector <string> y_predicted;
-        for (auto i:X_test)
+        y_predicted.reserve(X_test.size());
+        for (const auto& i:X_test)
         {
             y_predicted.push_back(this -> classify(i));
         }
         return y_predicted;
+    }
+
+    double metric(vector <string> y_predicted, vector <string> y_true)
+    {
+        double true_pos = 0;
+        double true_neg = 0;
+        double false_pos = 0;
+        double false_neg = 0;
+        int size = y_predicted.size();
+
+        for (int i=0;i<size;i++)
+        {
+            if (y_predicted[i] == "1" && y_true[i] =="1")
+            {
+                true_pos += 1;
+            } else if (y_predicted[i] == "0" && y_true[i] =="0") {
+                true_neg += 1;
+            } else if (y_predicted[i] == "1" && y_true[i] =="0"){
+                false_pos += 1;
+            }else{
+                false_neg += 1;
+            }
+
+        }
+        double accuracy = (true_pos + true_neg) / size;
+        return accuracy;
     }
 };
