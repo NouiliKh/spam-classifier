@@ -2,6 +2,7 @@
 // Created by NouiliKh on 12.12.19.
 //
 
+#include <cmath>
 #include "bayes_theorem.h"
 
 class BayesTheorem
@@ -11,8 +12,8 @@ public:
     double probability_ham;
     map<string, int> term_frequency_ham;
     map<string, int> term_frequency_spam;
-    map<string, int> probability_each_word_ham;
-    map<string, int> probability_each_word_spam;
+    map<string, double> probability_each_word_ham;
+    map<string, double> probability_each_word_spam;
 
     void fitData(vector<vector<string>> X_train, vector <string> y_train)
     {
@@ -49,5 +50,35 @@ public:
                 }
             }
         }
+    }
+
+    string classify(vector<string> message)
+    {
+        double pSpam = 0;
+        double pHam = 0;
+        for (auto word:message)
+        {
+            if (  this -> probability_each_word_spam.find(word) ==  this -> probability_each_word_spam.end() ) {
+                pSpam -= log(this -> probability_each_word_spam.size());
+            } else {
+                pSpam += log(this -> probability_each_word_spam[word]);
+            }
+            if ( this -> probability_each_word_ham.find(word) ==  this -> probability_each_word_ham.end() ) {
+                pHam -= log(this -> probability_each_word_ham.size());
+            } else {
+                pHam += log(this -> probability_each_word_ham[word]);
+            }
+        }
+        return pSpam >= pHam ? "1":"0" ;
+    }
+
+    vector <string> predictData(vector<vector<string>> X_test)
+    {
+        vector <string> y_predicted;
+        for (auto i:X_test)
+        {
+            y_predicted.push_back(this -> classify(i));
+        }
+        return y_predicted;
     }
 };

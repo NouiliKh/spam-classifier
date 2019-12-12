@@ -46,6 +46,7 @@ int main() {
 
     BayesTheorem model{};
     model.fitData(X_train,y_train);
+    vector <string> y_predict = model.predictData(X_test);
 
     return 0;
 };
