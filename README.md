@@ -1,6 +1,8 @@
 # spam-classifier
 
-Building a spam classifier using Bayesian inference from scratch. 
+Building a spam classifier using Bayesian inference from scratch .
+
+You can preprocess the data to bag of words or TF-IDF
 
 This project is developed with C++.
 

@@ -6,7 +6,9 @@
 #include <cstring>
 #include "main.h"
 #include "read_csv.cpp"
-#include "bag_of_words.cpp"
+#include "preprocess.cpp"
+#include "bayes_theorem.cpp"
+
 
 int main() {
 
@@ -19,7 +21,7 @@ int main() {
     vector <string> label_data ;
     vector <string> message_data ;
 
-    // Data Preprocessing
+    // Data Preprocess
     // construct a label vector and message vector
     // change labels to: {'ham':0, 'spam':1}
     // &i work with original items and may modify them.
@@ -30,22 +32,20 @@ int main() {
     }
 
     // Bag of words creation
-    BagOfWords bagOfWords;
-    bagOfWords.message_data = message_data;
-    vector<map<string, int>>  bagOfWordsData = bagOfWords.createBagOfWords();
+    Preprocess preprocess;
+    preprocess.message_data = message_data;
+    vector<vector<string>> preprocessedData = preprocess.preprocessData();
 
     // test/train split
-
     int sizeOfData = data.size();
     double splitPercentage = 0.8;
-    vector<map<string, int>> X_train(bagOfWordsData.begin(), bagOfWordsData.begin () + (sizeOfData*splitPercentage));
-    vector<map<string, int>> X_test(bagOfWordsData.begin()+ (sizeOfData*splitPercentage), bagOfWordsData.end());
+    vector<vector<string>> X_train(preprocessedData.begin(), preprocessedData.begin () + (sizeOfData * splitPercentage));
+    vector<vector<string>> X_test(preprocessedData.begin() + (sizeOfData * splitPercentage), preprocessedData.end());
     vector <string> y_train(label_data.begin(), label_data.begin () + (sizeOfData*splitPercentage));
     vector <string> y_test(label_data.begin()+ (sizeOfData*splitPercentage), label_data.end());
 
-
-
-
+    BayesTheorem model{};
+    model.fitData(X_train,y_train);
 
     return 0;
 };
