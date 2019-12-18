@@ -10,7 +10,6 @@ class Preprocess
 public:
     vector <string> message_data;
     vector<vector<string>> tokenized;
-
     vector<vector<string>> preprocessData()
     {
 

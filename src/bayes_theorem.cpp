@@ -14,6 +14,8 @@ public:
     map<string, int> term_frequency_spam;
     map<string, double> probability_each_word_ham;
     map<string, double> probability_each_word_spam;
+    int sum_tf_idf_spam = 0;
+    int sum_tf_idf_ham = 0;
 
     void fitData(vector<vector<string>> X_train, vector <string> y_train)
     {
@@ -32,7 +34,7 @@ public:
             this -> probability_each_word_spam[key] = val / this->term_frequency_spam.size();
         }
     }
-
+    
      void calculate_tfs(vector<vector<string>> X_train, vector <string> y_train){
 
         for (int i=0;i<X_train.size();i++)
@@ -103,7 +105,6 @@ public:
             }else{
                 false_neg += 1;
             }
-
         }
         double accuracy = (true_pos + true_neg) / size;
         return accuracy;
